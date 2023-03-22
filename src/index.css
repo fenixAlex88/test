@@ -9,3 +9,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: #f7eabf;
 }
+.hide {
+  display: none;
+}

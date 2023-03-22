@@ -1,8 +1,13 @@
 import './App.css';
-import Cards from './components/Cards/Cards';
+import Cards from './components/characters/Сharacters';
+import ScrollToTop from './components/scroll/ScrollToTop';
 
 function App() {
- 
-  return <Cards/>;
+  return (
+    <>
+      <Cards />
+      <ScrollToTop />
+    </>
+  );
 }
 export default App;

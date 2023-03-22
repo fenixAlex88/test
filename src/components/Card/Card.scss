@@ -5,6 +5,7 @@
   height: 350px;
   text-align: center;
   border-radius: 8px;
+  box-shadow: 1px 5px 10px 2px #223c5033;
 
   &__img {
     width: 80%;
@@ -13,6 +14,7 @@
     left: 50%;
     transform: translateX(-50%);
     border-radius: 10px;
+    box-shadow: 1px 10px 10px 10px #223c503a;
   }
   &__title{
     margin-top: 80%;

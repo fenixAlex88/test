@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Card from '../Card/Card';
+import Card from '../card/Card';
 import axios from 'axios';
-import './Cards.scss';
+import './Сharacters.scss';
 
 const API_URL = 'https://rickandmortyapi.com/api/character';
 
 function Cards() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [fetching, setFetching] = useState(true);
   const [totalCount, setTotalCount] = useState(1);
   useEffect(() => {
-    if (fetching) {
+    if (fetching && data.length < totalCount) {
       axios
         .get(API_URL, {
           params: {
@@ -22,32 +22,28 @@ function Cards() {
         .then((response) => {
           setData([...data, ...response.data.results]);
           setTotalCount(response.data.info.count);
-          setCurrentPage((prev) => prev + 1);
-          console.log(data.length);
-          console.log(totalCount);
-          console.log('page', currentPage);
+          setCurrentPage(currentPage + 1);
           setIsLoading(false);
         })
         .finally(() => {
           setFetching(false);
         });
     }
-  }, [fetching]);
+  }, [fetching, data, totalCount, currentPage]);
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler);
     return () => {
       document.removeEventListener('scroll', scrollHandler);
     };
   }, []);
+
   function scrollHandler(e) {
-    console.log(data);
-    console.log(totalCount);
-    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100 && data.length < totalCount) {
-      setFetching(true);
+    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
+      setFetching((prev) => true);
     }
   }
 
-  return <div className="cards">{isLoading ? <h2>Loading...</h2> : data.map(({ id, image, name }) => <Card key={id} image={image} name={data.length} />)}</div>;
+  return <div className="characters">{isLoading ? <h2>Loading...</h2> : data.map(({ id, image, name }) => <Card key={id} image={image} name={name} />)}</div>;
 }
 
 export default Cards;
