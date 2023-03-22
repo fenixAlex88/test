@@ -38,12 +38,21 @@ function Cards() {
   }, []);
 
   function scrollHandler(e) {
-    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100) {
+    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 250) {
       setFetching((prev) => true);
     }
   }
 
-  return <div className="characters">{isLoading ? <h2>Loading...</h2> : data.map(({ id, image, name }) => <Card key={id} image={image} name={name} />)}</div>;
+  function showModalInfo(id){
+    console.log(data.find(item=>item.id===id));
+
+  }
+
+  return (
+  <div className='container'>
+    <div className="characters">{isLoading ? <h2>Loading...</h2> : data.map(({ id, image, name }) => <Card key={id} id={id} image={image} name={name} showModalInfo={showModalInfo}/>)}</div>
+  </div>
+  )
 }
 
 export default Cards;

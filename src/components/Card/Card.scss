@@ -6,6 +6,8 @@
   text-align: center;
   border-radius: 8px;
   box-shadow: 1px 5px 10px 2px #223c5033;
+  cursor: pointer;
+  transition: transform .6s, box-shadow .6s;
 
   &__img {
     width: 80%;
@@ -19,6 +21,10 @@
   &__title{
     margin-top: 80%;
     font-weight: 700;
-    font-size: 20px;
+    font-size: 1.25rem;
+  }
+  &:hover{
+    transform: scale(1.05);
+    box-shadow: 1px 5px 10px 8px #223c5044;
   }
 }

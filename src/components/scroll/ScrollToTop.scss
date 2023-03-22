@@ -1,15 +1,17 @@
 .scrollToTop {
   &__btn {
-    width: 125px;
-    height: 125px;
+    width: 100px;
+    height: 100px;
     position: fixed;
+    border: none;
     border-radius: 50%;
     background-color: #5153c5;
     color: #f9fad0;
-    font-size: 75px;
+    font-size: 60px;
     line-height: 0px;
     bottom: 50px;
     right: 50px;
+    box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.8);
     cursor: pointer;
     transition: background-color .6s, transform .6s;
     &:hover {

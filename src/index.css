@@ -7,8 +7,16 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f7eabf;
+
 }
 .hide {
   display: none;
+}
+.container{
+  max-width: 1200px;
+  height: 100%;
+  background-color: #f7eabf;
+  margin: 0 auto;
+  padding: 1px;
+  box-shadow: -15px 0px 13px -7px #00000050, 15px 0px 13px -7px #00000050, 7px -6px 10px -12px rgba(0,0,0,0);
 }
