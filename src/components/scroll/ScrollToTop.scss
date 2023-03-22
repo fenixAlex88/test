@@ -7,20 +7,26 @@
     border-radius: 50%;
     background-color: #5153c5;
     color: #f9fad0;
-    font-size: 60px;
+    font-size: 50px;
     line-height: 0px;
     bottom: 50px;
     right: 50px;
     box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.8);
     cursor: pointer;
-    transition: background-color .6s, transform .6s;
+    pointer-events: all;
+    transition: all 0.4s;
     &:hover {
       background-color: #95c4f1;
       color: #2e2e2a;
       transform: scale(1.05);
     }
     &:active {
-        box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.8) inset;
+      box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.8) inset;
     }
   }
+}
+
+body[style ='overflow: hidden;'] .scrollToTop__btn {
+  opacity: 0;
+  pointer-events: none;
 }

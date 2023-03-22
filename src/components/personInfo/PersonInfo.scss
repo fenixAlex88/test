@@ -1,0 +1,31 @@
+.person {
+  display: flex;
+  position: relative;
+  height: 500px;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  &__img {
+    height: 100%;
+  }
+  &__description {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-top: 50px;
+    font-size: 18px;
+  }
+  &__title {
+    font-weight: 700;
+    text-transform: capitalize;
+    margin: 5px 0;
+    &::after {
+      content: ':';
+      margin-left: -4px;
+    }
+  }
+  &__quality {
+    width: 50%;
+  }
+  
+}
