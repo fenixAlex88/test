@@ -6,7 +6,9 @@
     list-style: none;
     display: flex;
     margin: 0 auto;
+    user-select: none;
   }
+  
   &__item,
   &__auto {
     display: block;
@@ -25,7 +27,13 @@
       color: #fcfcfc;
     }
   }
+  
   &__auto {
     width: 50px;
+    &-disabled{
+      background-color: #d7ceaf;
+        color: #8b8686;
+        pointer-events: none;
+    }
   }
 }

@@ -1,4 +1,3 @@
-import './App.css';
 import Сharacters from './components/characters/Сharacters';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';

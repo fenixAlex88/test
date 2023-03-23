@@ -5,6 +5,7 @@ import Modal from '../modal/Modal';
 import PersonInfo from '../personInfo/PersonInfo';
 import PagesPagination from '../pagesPagination/PagesPagination';
 import './Сharacters.scss';
+import Preloader from '../preloader/Preloader';
 
 const API_URL = 'https://rickandmortyapi.com/api/character';
 const personKeys = ['name', 'origin', 'status', 'location', 'species', 'gender'];
@@ -17,6 +18,7 @@ function Сharacters() {
   const [totalPage, setTotalPage] = useState(1);
   const [modalActive, setModalActive] = useState(false);
   const [person, setPerson] = useState({});
+  const [autoPagination, setAutoPagination] = useState(false);
 
   useEffect(() => {
     if (fetching && currentPage <= totalPage) {
@@ -28,19 +30,37 @@ function Сharacters() {
         })
         .then((response) => response.data)
         .then((res) => {
-          console.log(res);
-          setData([
-            ...res.results.map(({ id, name, image, status, species, gender, location, origin }) => ({
-              id,
-              name,
-              image,
-              status,
-              species,
-              gender,
-              location: location['name'],
-              origin: origin['name'],
-            })),
-          ]);
+          if (autoPagination) {
+            setData([
+              ...data,
+              ...res.results.map(({ id, name, image, status, species, gender, location, origin }) => ({
+                id,
+                name,
+                image,
+                status,
+                species,
+                gender,
+                location: location['name'],
+                origin: origin['name'],
+              })),
+            ]);
+            setCurrentPage(currentPage + 1);
+            console.log('data if ',data);
+          } else {
+            setData(prev=>res.results.map(({ id, name, image, status, species, gender, location, origin }) => ({
+                id,
+                name,
+                image,
+                status,
+                species,
+                gender,
+                location: location['name'],
+                origin: origin['name'],
+              })),
+            );
+            console.log('data else ',data);
+          }
+
           setTotalPage(res.info.pages);
           setIsLoading(false);
         })
@@ -49,6 +69,19 @@ function Сharacters() {
         });
     }
   }, [fetching, data, currentPage, totalPage]);
+
+  useEffect(() => {
+    document.addEventListener('scroll', scrollHandler);
+    return () => {
+      document.removeEventListener('scroll', scrollHandler);
+    };
+  }, []);
+
+  function scrollHandler(e) {
+    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 250) {
+      setFetching((prev) => true);
+    }
+  }
 
   function showModalInfo(id) {
     setPerson(data.find((item) => item.id === id));
@@ -64,16 +97,16 @@ function Сharacters() {
     });
   }
 
+
   return (
     <div className="container">
-      <PagesPagination currentPage={currentPage} totalPage={totalPage} changePage={changePage} />
+      <PagesPagination currentPage={currentPage} totalPage={totalPage} changePage={changePage} autoPagination={autoPagination} setAutoPagination={setAutoPagination} />
       <div className="characters">
-        {isLoading ? <h2>Loading...</h2> : data.map(({ id, image, name }) => <Card key={id} id={id} image={image} name={name} showModalInfo={showModalInfo} />)}
+        {isLoading ? <Preloader/> : data.map(({ id, image, name }) => <Card key={`${Math.random()}_${id}`} id={id} image={image} name={name} showModalInfo={showModalInfo} />)}
       </div>
       <Modal active={modalActive} setActive={setModalActive}>
         {person ? <PersonInfo personKeys={personKeys} person={person} /> : <div className="">Information not found</div>}
       </Modal>
-      <PagesPagination currentPage={currentPage} totalPage={totalPage} changePage={changePage} />
     </div>
   );
 }
