@@ -12,28 +12,30 @@ const personKeys = ['name', 'origin', 'status', 'location', 'species', 'gender']
 
 function Сharacters() {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [fetching, setFetching] = useState(true);
+  const [isFetching, setIsFetching] = useState(true);
   const [totalPage, setTotalPage] = useState(1);
   const [modalActive, setModalActive] = useState(false);
   const [person, setPerson] = useState({});
   const [autoPagination, setAutoPagination] = useState(false);
 
   useEffect(() => {
-    if (fetching && currentPage <= totalPage) {
+    if (isFetching && currentPage <= totalPage) {
       axios
         .get(API_URL, {
           params: {
             page: currentPage,
           },
         })
-        .then((response) => response.data)
+        .then((response) => {
+          setTotalPage(response.data.info.pages);
+          return response.data.results;
+        })
         .then((res) => {
           if (autoPagination) {
             setData([
               ...data,
-              ...res.results.map(({ id, name, image, status, species, gender, location, origin }) => ({
+              ...res.map(({ id, name, image, status, species, gender, location, origin }) => ({
                 id,
                 name,
                 image,
@@ -45,9 +47,9 @@ function Сharacters() {
               })),
             ]);
             setCurrentPage(currentPage + 1);
-            console.log('data if ',data);
           } else {
-            setData(prev=>res.results.map(({ id, name, image, status, species, gender, location, origin }) => ({
+            setData(
+              res.map(({ id, name, image, status, species, gender, location, origin }) => ({
                 id,
                 name,
                 image,
@@ -56,30 +58,38 @@ function Сharacters() {
                 gender,
                 location: location['name'],
                 origin: origin['name'],
-              })),
+              }))
             );
-            console.log('data else ',data);
           }
-
-          setTotalPage(res.info.pages);
-          setIsLoading(false);
         })
         .finally(() => {
-          setFetching(false);
+          setIsFetching(false);
         });
+    } else {
+      setIsFetching(false);
     }
-  }, [fetching, data, currentPage, totalPage]);
+  }, [isFetching, data, currentPage, totalPage, autoPagination]);
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler);
     return () => {
       document.removeEventListener('scroll', scrollHandler);
     };
-  }, []);
+  }, [scrollHandler]);
 
   function scrollHandler(e) {
-    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 250) {
-      setFetching((prev) => true);
+    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 150 && autoPagination) {
+      setIsFetching(true);
+    }
+  }
+
+  function autoPaginationHandler() {
+    if (autoPagination) {
+      setAutoPagination((prev) => !prev);
+      changePage(currentPage);
+    } else {
+      setAutoPagination((prev) => !prev);
+      changePage(currentPage + 1);
     }
   }
 
@@ -90,19 +100,23 @@ function Сharacters() {
 
   function changePage(num) {
     setCurrentPage(num);
-    setFetching(true);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    setIsFetching(true);
   }
-
 
   return (
     <div className="container">
-      <PagesPagination currentPage={currentPage} totalPage={totalPage} changePage={changePage} autoPagination={autoPagination} setAutoPagination={setAutoPagination} />
+      <PagesPagination
+        currentPage={currentPage}
+        totalPage={totalPage}
+        changePage={changePage}
+        autoPagination={autoPagination}
+        autoPaginationHandler={autoPaginationHandler}
+      />
       <div className="characters">
-        {isLoading ? <Preloader/> : data.map(({ id, image, name }) => <Card key={`${Math.random()}_${id}`} id={id} image={image} name={name} showModalInfo={showModalInfo} />)}
+        {isFetching && <Preloader />}
+        {data.map(({ id, image, name }) => (
+          <Card key={id} id={id} image={image} name={name} showModalInfo={showModalInfo} />
+        ))}
       </div>
       <Modal active={modalActive} setActive={setModalActive}>
         {person ? <PersonInfo personKeys={personKeys} person={person} /> : <div className="">Information not found</div>}

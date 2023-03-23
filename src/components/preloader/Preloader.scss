@@ -1,66 +1,63 @@
 .preloader {
-    position: fixed;
-    height: 100vh;
-    width: 100vw;
+  padding: 0px;
+  margin: 0px;
+  z-index: 1;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #68656585;
+  pointer-events: none;
+  &__content {
+    position: absolute;
+    height: 120px;
+    width: 120px;
+    border: 8px solid transparent;
+    border-top-color: #ff71a8;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #6865654f;
+    margin: -30px;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
 
-    &__container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      border: 7px solid transparent;
+      border-radius: 50%;
     }
 
-    &__round {
-        width: 4vw;
-        height: 4vw;
-        border-radius: 100%;
-        margin: 3vw;
-        background-image: linear-gradient(145deg, rgba(255, 255, 255, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
-        animation: bounce 1.5s 0.5s linear infinite;
-
-        &-yellow {
-            background-color: #feb60a;
-        }
-
-        &-red {
-            background-color: #ff0062;
-            animation-delay: 0.1s;
-        }
-
-        &-blue {
-            background-color: #00dbf9;
-            animation-delay: 0.2s;
-        }
-
-        &-violet {
-            background-color: #da00f7;
-            animation-delay: 0.3s;
-        }
+    &:before {
+      border-top-color: #4a9adb;
+      top: -21px;
+      left: -21px;
+      right: -21px;
+      bottom: -21px;
+      animation: spin 3s linear infinite;
     }
+
+    &:after {
+      border-top-color: #caffc3;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      animation: spin 4s linear infinite;
+    }
+  }
 }
 
-@keyframes bounce {
-
-    0%,
-    50%,
-    100% {
-        transform: scale(1);
-        filter: blur(0px);
-    }
-
-    25% {
-        transform: scale(0.6);
-        filter: blur(3px);
-    }
-
-    75% {
-        filter: blur(3px);
-        transform: scale(1.4);
-    }
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

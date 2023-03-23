@@ -1,9 +1,11 @@
+import { FaCopyright } from 'react-icons/fa';
 import './Footer.scss';
-const Footer = () =>{
+const Footer = () => {
   return (
-    <header className='footer'>
-      <div>&copy 2023 Aleksey Pekar</div>
-    </header>
+    <footer className="footer">
+      <FaCopyright className='footer__copy'/>
+      <span>2023 Aleksey Pekar</span>
+    </footer>
   );
-}
+};
 export default Footer;
