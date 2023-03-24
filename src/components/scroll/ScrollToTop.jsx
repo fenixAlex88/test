@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BsFillShiftFill } from 'react-icons/bs';
-import './ScrollToTop.scss';
+import styles from './ScrollToTop.module.scss';
 
 function ScrollToTop() {
   const [isVisiable, setIsVisible] = useState(false);
@@ -27,9 +27,9 @@ function ScrollToTop() {
     };
   }, []);
   return (
-    <div className={`scrollToTop${isVisiable ? '' : ' hide'}`}>
-      <button type="button" onClick={scrollToTop} className="scrollToTop__btn">
-        <BsFillShiftFill className="scrollTOTop__arrow" />
+    <div className={`${styles.scrollToTop} ${!isVisiable ? styles.hide : null}`}>
+      <button type="button" onClick={scrollToTop} className={styles.scrollToTop__btn}>
+        <BsFillShiftFill />
       </button>
     </div>
   );

@@ -1,7 +1,9 @@
+@import '../../styles/vars';
+
 .person {
   display: flex;
   position: relative;
-  height: 500px;
+  height: 450px;
   justify-content: space-between;
   align-items: flex-start;
   gap: 20px;
@@ -14,12 +16,13 @@
     flex-wrap: wrap;
     align-items: flex-start;
     margin-top: 50px;
-    font-size: 18px;
   }
   &__title {
-    font-weight: 700;
     text-transform: capitalize;
     margin: 5px 0;
+    font-family: $main-font;
+    font-size: 1.1rem;
+    font-weight: 700;
     &::after {
       content: ':';
       margin-left: -4px;
@@ -27,6 +30,10 @@
   }
   &__quality {
     width: 50%;
+  }
+  &__value{
+    font-family: $second-font;
+    font-size: 1.25rem;
   }
   
 }

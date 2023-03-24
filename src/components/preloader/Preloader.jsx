@@ -1,9 +1,9 @@
-import './Preloader.scss';
+import stules from'./Preloader.module.scss';
 
 const Preloader = () => {
   return (
-    <div className="preloader">
-      <div className="preloader__content"></div>
+    <div className={stules.preloader}>
+      <div className={stules.preloader__content}></div>
     </div>
   );
 };

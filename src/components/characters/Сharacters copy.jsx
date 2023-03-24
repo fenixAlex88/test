@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../card/Card';
 import axios from 'axios';
-import './Сharacters.scss';
+import './Сharacters.module.scss';
 import Modal from '../modal/Modal';
 import PersonInfo from '../personInfo/PersonInfo';
 

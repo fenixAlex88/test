@@ -1,22 +1,21 @@
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './PagesPagination.module.scss';
 
 const PagesPagination = ({ currentPage, totalPage, changePage, autoPagination, autoPaginationHandler }) => {
- const [pages, setPages] = useState([]);
+ const [pages, setPages] = useState([1]);
+ const [minPage, setMinPage] = useState();
+ const [maxPage, setMaxPage] = useState();
 
- let minPage =  currentPage - 3 > 1 ? currentPage - 3 : 2;
- let maxPage = minPage + 7 < totalPage ? minPage + 7 : totalPage - 1;
- if (maxPage + 1 >= totalPage) minPage = totalPage - 8;
  
-
- useEffect(()=>{
-  const arr = [];
- for (let i = minPage; i <= maxPage; i++) {
-  arr.push(i);
-};
-  setPages([1, ...arr, totalPage]);
-},[minPage,maxPage,totalPage])
+  setMinPage(prev => currentPage - 3 > 1 ? currentPage - 3 : 2);
+  setMaxPage(prev=> minPage + 7 < totalPage ? minPage + 7 : totalPage - 1);
+  if (maxPage + 1 >= totalPage) setMinPage(prev => totalPage - 8);
   
+  useEffect(()=>{for (let i = minPage; i <= maxPage; i++) {
+    pages.push(i);
+  }}, [minPage, maxPage, pages]);
+  
+  setPages(prev=>[...prev, totalPage]);
 
   return (
     <div className={styles.pagination}>
@@ -38,4 +37,4 @@ const PagesPagination = ({ currentPage, totalPage, changePage, autoPagination, a
   );
 };
 
-export default PagesPagination
+export default PagesPagination;

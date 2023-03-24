@@ -1,15 +1,15 @@
-import './PersonInfo.scss';
+import styles from './PersonInfo.module.scss';
 
 const PersonInfo = ({ personKeys, person }) => {
   return (
-    <div className="person">
-      <img src={person.image} alt={person.name} className="person__img" />
-      <div className="person__description">
+    <div className={styles.person}>
+      <img src={person.image} alt={person.name} className={styles.person__img} />
+      <div className={styles.person__description}>
         {personKeys.map((item, i) => {
           return (
-            <div key={i} className="person__quality">
-              <div className="person__title">{item} </div>
-              <div className="person__value">{person[item]}</div>
+            <div key={i} className={styles.person__quality}>
+              <div className={styles.person__title}>{item} </div>
+              <div className={styles.person__value}>{person[item]}</div>
             </div>
           );
         })}

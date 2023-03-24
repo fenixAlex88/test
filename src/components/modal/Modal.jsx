@@ -1,5 +1,5 @@
 import { BsXLg } from 'react-icons/bs';
-import './Modal.scss';
+import styles from './Modal.module.scss';
 
 const Modal = ({ active, setActive, children }) => {
   if (active) document.body.style.overflow = 'hidden';
@@ -8,15 +8,15 @@ const Modal = ({ active, setActive, children }) => {
     document.body.style.removeProperty('overflow');
   };
   return (
-    <div className={`modal${active ? ' modal-active' : ''}`} onClick={closeModalHandler}>
+    <div className={`${styles.modal} ${active ? styles.active : null}`} onClick={closeModalHandler}>
       <div
-        className={`modal__content${active ? ' modal__content-active' : ''}`}
+        className={`${styles.modal__content} ${active ?  styles.active : null}`}
         onClick={(e) => {
           if (!e.target.className.animVal) e.stopPropagation();
         }}
       >
         {children}
-        <BsXLg className="modal__closeBtn" />
+        <BsXLg className={styles.modal__closeBtn} />
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import Card from '../card/Card';
 import Modal from '../modal/Modal';
 import PersonInfo from '../personInfo/PersonInfo';
 import PagesPagination from '../pagesPagination/PagesPagination';
-import './Сharacters.scss';
+import styles from './Сharacters.module.scss';
 import Preloader from '../preloader/Preloader';
 
 const API_URL = 'https://rickandmortyapi.com/api/character';
@@ -29,37 +29,26 @@ function Сharacters() {
         })
         .then((response) => {
           setTotalPage(response.data.info.pages);
-          return response.data.results;
+          return response.data.results.map(({ id, name, image, status, species, gender, location, origin }) => ({
+            id,
+            name,
+            image,
+            status,
+            species,
+            gender,
+            location: location['name'],
+            origin: origin['name'],
+          }));
         })
         .then((res) => {
           if (autoPagination) {
-            setData([
+            setData(prev=>[
               ...data,
-              ...res.map(({ id, name, image, status, species, gender, location, origin }) => ({
-                id,
-                name,
-                image,
-                status,
-                species,
-                gender,
-                location: location['name'],
-                origin: origin['name'],
-              })),
+              ...res,
             ]);
             setCurrentPage(currentPage + 1);
           } else {
-            setData(
-              res.map(({ id, name, image, status, species, gender, location, origin }) => ({
-                id,
-                name,
-                image,
-                status,
-                species,
-                gender,
-                location: location['name'],
-                origin: origin['name'],
-              }))
-            );
+            setData([...res]);
           }
         })
         .finally(() => {
@@ -84,13 +73,8 @@ function Сharacters() {
   }
 
   function autoPaginationHandler() {
-    if (autoPagination) {
       setAutoPagination((prev) => !prev);
-      changePage(currentPage);
-    } else {
-      setAutoPagination((prev) => !prev);
-      changePage(currentPage + 1);
-    }
+      changePage(currentPage+1);
   }
 
   function showModalInfo(id) {
@@ -104,7 +88,7 @@ function Сharacters() {
   }
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <PagesPagination
         currentPage={currentPage}
         totalPage={totalPage}
@@ -112,13 +96,22 @@ function Сharacters() {
         autoPagination={autoPagination}
         autoPaginationHandler={autoPaginationHandler}
       />
-      <div className="characters">
+      <div className={styles.characters}>
         {isFetching && <Preloader />}
         {data.map(({ id, image, name }) => (
-          <Card key={id} id={id} image={image} name={name} showModalInfo={showModalInfo} />
+          <Card 
+            key={id} 
+            id={id} 
+            image={image} 
+            name={name} 
+            showModalInfo={showModalInfo} 
+          />
         ))}
       </div>
-      <Modal active={modalActive} setActive={setModalActive}>
+      <Modal 
+        active={modalActive} 
+        setActive={setModalActive}
+      >
         {person ? <PersonInfo personKeys={personKeys} person={person} /> : <div className="">Information not found</div>}
       </Modal>
     </div>

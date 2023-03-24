@@ -1,3 +1,5 @@
+@import '../../styles/vars';
+
 .scrollToTop {
   &__btn {
     width: 100px;
@@ -5,8 +7,8 @@
     position: fixed;
     border: none;
     border-radius: 50%;
-    background-color: #5153c5;
-    color: #f9fad0;
+    background-color: $bg-upbtn;
+    color: $color-white;
     font-size: 50px;
     line-height: 0px;
     bottom: 50px;
@@ -16,14 +18,18 @@
     pointer-events: all;
     transition: all 0.4s;
     &:hover {
-      background-color: #95c4f1;
-      color: #2e2e2a;
+      background-color:$bg-upbtn-hover;
+      color: $color-darkGrey;
       transform: scale(1.05);
     }
     &:active {
       box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.8) inset;
     }
+
   }
+  &.hide{
+      display: none;
+    }
 }
 
 body[style ='overflow: hidden;'] .scrollToTop__btn {

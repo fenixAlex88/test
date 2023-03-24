@@ -1,6 +1,8 @@
+@import '../../styles/vars';
+
 .header{
     height: 300px;
-    background-color: #504b41;
+    background-color: $bg-header;
     display: flex;
     align-items: center;
     justify-content: center;
