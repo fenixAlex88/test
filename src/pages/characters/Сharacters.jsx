@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Card from './card/Card';
-import {Modal, Nav, Preloader} from '../general';
-import PersonInfo from './personInfo/PersonInfo';
-import PagesPagination from './pagesPagination/PagesPagination';
+import Card from '../../components/card/Card';
+import {Modal, Nav, Preloader} from '../../components/general';
+import PersonInfo from '../../components/personInfo/PersonInfo';
+import PagesPagination from '../../components/pagesPagination/PagesPagination';
 import styles from './Сharacters.module.scss';
 
 const API_URL = 'https://rickandmortyapi.com/api/character';
