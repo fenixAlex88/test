@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import axios from 'axios';
 import Card from '../../components/card/Card';
 import {Modal, Nav, Preloader} from '../../components/general';
@@ -55,21 +55,19 @@ function Сharacters() {
     }
   }, [isFetching, data, currentPage, totalPage, autoPagination]);
 
+  const scrollHandler = useCallback((e)=>{if (
+      e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 150 &&
+      autoPagination
+  ) {
+    setIsFetching(true);
+  }},[autoPagination]);
+
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler);
     return () => {
       document.removeEventListener('scroll', scrollHandler);
     };
   }, [scrollHandler]);
-
-  function scrollHandler(e) {
-    if (
-      e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 150 &&
-      autoPagination
-    ) {
-      setIsFetching(true);
-    }
-  }
 
   function autoPaginationHandler() {
     if (autoPagination) {
