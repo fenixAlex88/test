@@ -30,6 +30,7 @@ function ScrollToTop() {
     <div className={`${styles.scrollToTop} ${!isVisiable ? styles.hide : null}`}>
       <button type="button" onClick={scrollToTop} className={styles.scrollToTop__btn}>
         <BsFillShiftFill />
+        <div className={styles.toTop}>to top</div>
       </button>
     </div>
   );

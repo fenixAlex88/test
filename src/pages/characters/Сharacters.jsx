@@ -67,7 +67,7 @@ function Сharacters() {
     if (person.episode) {
       setIsFetching(true);
       axios
-        .get(person.episode + '77')
+        .get(person.episode)
         .then((res) => {
           setPremiere((prev) => `ep.${res.data.id} "${res.data.name}"`);
         })
