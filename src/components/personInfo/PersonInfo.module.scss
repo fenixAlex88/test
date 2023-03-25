@@ -15,6 +15,7 @@
   @media (max-width: 738px) {
     height: 350px;
     width: 600px;
+    gap: 10px;
   }
   @media (max-width: 630px) {
     flex-direction: column;
@@ -45,8 +46,11 @@
     flex-wrap: wrap;
     align-items: flex-start;
     margin-top: 50px;
+    @media (max-width: 738px) {
+      margin-top: 25px;
+    }
     @media (max-width: 630px) {
-      margin: 20px;
+      margin: 0 20px 10px;
     }
   }
   &__title {
@@ -57,6 +61,7 @@
     font-weight: 700;
     @media (max-width: 630px) {
       font-size: 0.9rem;
+      margin: 0 0 3px;
     }
     &::after {
       content: ':';
@@ -69,6 +74,7 @@
   &__value {
     font-family: $second-font;
     font-size: 1.25rem;
+    font-weight: 700;
     @media (max-width: 630px) {
       font-size: 1rem;
     }

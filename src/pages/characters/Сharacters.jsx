@@ -1,25 +1,29 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
+import { Modal, Nav, Preloader, Error } from '../../components/general';
 import Card from '../../components/card/Card';
-import {Modal, Nav, Preloader} from '../../components/general';
 import PersonInfo from '../../components/personInfo/PersonInfo';
 import PagesPagination from '../../components/pagesPagination/PagesPagination';
 import styles from './Сharacters.module.scss';
 
 const API_URL = 'https://rickandmortyapi.com/api/character';
-const personKeys = ['name', 'origin', 'status', 'location', 'species', 'gender'];
+const personKeys = ['name', 'origin', 'status', 'location', 'species', 'gender', 'premiere'];
 
 function Сharacters() {
   const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [isFetching, setIsFetching] = useState(true);
+  const [fetching, setFetching] = useState(true);
+  const [isFetching, setIsFetching] = useState(false);
   const [totalPage, setTotalPage] = useState(1);
   const [modalActive, setModalActive] = useState(false);
   const [person, setPerson] = useState({});
+  const [premiere, setPremiere] = useState();
   const [autoPagination, setAutoPagination] = useState(false);
 
   useEffect(() => {
-    if (isFetching && currentPage <= totalPage) {
+    if (fetching && currentPage <= totalPage) {
+      setIsFetching(true);
       axios
         .get(API_URL, {
           params: {
@@ -27,8 +31,9 @@ function Сharacters() {
           },
         })
         .then((response) => {
+          console.log(response);
           setTotalPage(response.data.info.pages);
-          return response.data.results.map(({ id, name, image, status, species, gender, location, origin }) => ({
+          return response.data.results.map(({ id, name, image, status, species, gender, location, origin, episode }) => ({
             id,
             name,
             image,
@@ -37,6 +42,7 @@ function Сharacters() {
             gender,
             location: location['name'],
             origin: origin['name'],
+            episode: episode[0],
           }));
         })
         .then((res) => {
@@ -47,20 +53,42 @@ function Сharacters() {
             setData([...res]);
           }
         })
+        .catch((err) => {
+          setError((prev) => err);
+        })
         .finally(() => {
+          setFetching(false);
           setIsFetching(false);
         });
-    } else {
-      setIsFetching(false);
     }
-  }, [isFetching, data, currentPage, totalPage, autoPagination]);
+  }, [fetching, data, currentPage, totalPage, autoPagination]);
 
-  const scrollHandler = useCallback((e)=>{if (
-      e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 150 &&
-      autoPagination
-  ) {
-    setIsFetching(true);
-  }},[autoPagination]);
+  useEffect(() => {
+    if (person.episode) {
+      setIsFetching(true);
+      axios
+        .get(person.episode + '77')
+        .then((res) => {
+          setPremiere((prev) => `ep.${res.data.id} "${res.data.name}"`);
+        })
+        .catch((err) => {
+          setError((prev) => err);
+        })
+        .finally(setIsFetching(false));
+    }
+  }, [person]);
+
+  const scrollHandler = useCallback(
+    (e) => {
+      if (
+        e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 150 &&
+        autoPagination
+      ) {
+        setFetching(true);
+      }
+    },
+    [autoPagination]
+  );
 
   useEffect(() => {
     document.addEventListener('scroll', scrollHandler);
@@ -86,32 +114,42 @@ function Сharacters() {
 
   function changePage(num) {
     setCurrentPage(num);
-    setIsFetching(true);
+    setFetching(true);
   }
 
   return (
     <div className="container">
       <div className={styles.wrapper}>
-        <Nav title='Pages:'>
-        <PagesPagination
-          currentPage={currentPage}
-          totalPage={totalPage}
-          changePage={changePage}
-          autoPagination={autoPagination}
-          autoPaginationHandler={autoPaginationHandler}
-        />
-      </Nav>
-
-      <div className={styles.characters}>
-        {isFetching && <Preloader />}
-        {data.map(({ id, image, name }) => (
-          <Card key={id} id={id} image={image} name={name} showModalInfo={showModalInfo} />
-        ))}
+        <Nav title="Pages:">
+          <PagesPagination
+            currentPage={currentPage}
+            totalPage={totalPage}
+            changePage={changePage}
+            autoPagination={autoPagination}
+            autoPaginationHandler={autoPaginationHandler}
+          />
+        </Nav>
+        <div className={styles.characters}>
+          {isFetching && <Preloader />}
+          {data.map(({ id, image, name }) => (
+            <Card key={id} id={id} image={image} name={name} showModalInfo={showModalInfo} />
+          ))}
+        </div>
+        {modalActive && (
+          <Modal active={modalActive} setActive={setModalActive}>
+            {person ? (
+              <PersonInfo personKeys={personKeys} person={{ ...person, premiere }} />
+            ) : (
+              <Error error={{ message: 'Information about this person not found' }} />
+            )}
+          </Modal>
+        )}
       </div>
-      <Modal active={modalActive} setActive={setModalActive}>
-        {person ? <PersonInfo personKeys={personKeys} person={person} /> : <div className="">Information not found</div>}
-      </Modal>
-      </div>
+      {error && (
+        <Modal active={error} setActive={setError}>
+          <Error error={error} />
+        </Modal>
+      )}
     </div>
   );
 }

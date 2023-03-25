@@ -1,0 +1,20 @@
+@import '../../../styles/vars';
+
+.error {
+  color: red;
+  width: 320px;
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: $main-font;
+  &__title {
+    text-align: center;
+    font-size: 1.2rem;
+  }
+  &__message {
+    text-align: center;
+    font-size: 1rem;
+  }
+}

@@ -8,7 +8,11 @@
     gap: 75px 15px;
 }
 .wrapper{
+    min-height: calc(100vh - 24.2vw);
     background-color: $bg-content;
     padding: 1px;
     box-shadow: -15px 0px 13px -7px #00000050, 15px 0px 13px -7px #00000050, 7px -6px 10px -12px rgba(0,0,0,0);
+    @media (max-width: 768px){
+        min-height: calc(100vh - 202px);
+    }
 }
