@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Card from '../card/Card';
-import Modal from '../modal/Modal';
-import PersonInfo from '../personInfo/PersonInfo';
-import PagesPagination from '../pagesPagination/PagesPagination';
+import Card from './card/Card';
+import {Modal, Nav, Preloader} from '../general';
+import PersonInfo from './personInfo/PersonInfo';
+import PagesPagination from './pagesPagination/PagesPagination';
 import styles from './Сharacters.module.scss';
-import Preloader from '../preloader/Preloader';
-import Navbar from '../navbar/Navbar.jsx';
 
 const API_URL = 'https://rickandmortyapi.com/api/character';
 const personKeys = ['name', 'origin', 'status', 'location', 'species', 'gender'];
@@ -96,7 +94,7 @@ function Сharacters() {
   return (
     <div className="container">
       <div className={styles.wrapper}>
-        <Navbar title='Pages:'>
+        <Nav title='Pages:'>
         <PagesPagination
           currentPage={currentPage}
           totalPage={totalPage}
@@ -104,7 +102,7 @@ function Сharacters() {
           autoPagination={autoPagination}
           autoPaginationHandler={autoPaginationHandler}
         />
-      </Navbar>
+      </Nav>
 
       <div className={styles.characters}>
         {isFetching && <Preloader />}

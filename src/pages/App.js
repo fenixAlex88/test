@@ -1,7 +1,6 @@
 import Сharacters from '../components/characters/Сharacters';
-import Footer from '../components/footer/Footer';
-import Header from '../components/header/Header';
-import ScrollToTop from '../components/scroll/ScrollToTop';
+import {Footer, Header} from '../components/layout';
+import {ScrollToTop} from '../components/general';
 
 function App() {
   return (

@@ -1,4 +1,4 @@
-import stules from'./Preloader.module.scss';
+import stules from './Preloader.module.scss';
 
 const Preloader = () => {
   return (

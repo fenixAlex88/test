@@ -5,6 +5,7 @@ const PagesPagination = ({ currentPage, totalPage, changePage, autoPagination, a
   const [pages, setPages] = useState([]);
 
   useEffect(() => {
+    if(totalPage===1) return;
     let minPage = currentPage - 3 > 1 ? currentPage - 3 : 2;
     let maxPage = minPage + 7 < totalPage ? minPage + 7 : totalPage - 1;
     if (maxPage + 1 >= totalPage) minPage = totalPage - 8;

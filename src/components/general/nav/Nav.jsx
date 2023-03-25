@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import style from './Navbar.module.scss';
+import style from './Nav.module.scss';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 
-const Navbar = ({ title ='', children }) => {
+const Nav = ({ title ='', children }) => {
 
   const [isNav, setIsNav] = useState(false);
 
@@ -21,4 +21,4 @@ const Navbar = ({ title ='', children }) => {
   );
 };
 
-export default Navbar;
+export default Nav;

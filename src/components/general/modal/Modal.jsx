@@ -12,11 +12,11 @@ const Modal = ({ active, setActive, children }) => {
       <div
         className={`${styles.modal__content} ${active ?  styles.active : null}`}
         onClick={(e) => {
-          if (!e.target.className.animVal) e.stopPropagation();
+          if (!e.target.hasAttribute('data-modal-close')) e.stopPropagation();
         }}
       >
         {children}
-        <BsXLg className={styles.modal__closeBtn} />
+        <BsXLg className={styles.modal__closeBtn} data-modal-close/>
       </div>
     </div>
   );
