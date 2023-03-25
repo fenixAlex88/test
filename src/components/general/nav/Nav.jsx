@@ -8,7 +8,7 @@ const Nav = ({ title ='', children }) => {
 
   return (
       <div className="container">
-        <div className={style.wrapper}>
+        <nav className={style.wrapper}>
           <div className={style.title}>
             {title}
           </div>
@@ -16,7 +16,7 @@ const Nav = ({ title ='', children }) => {
           <div onClick={() => setIsNav(!isNav)} className={style.mobile_btn}>
             {isNav ? <AiOutlineClose size={35} /> : <AiOutlineMenu size={35} />}
           </div>
-        </div>
+        </nav>
       </div>
   );
 };
