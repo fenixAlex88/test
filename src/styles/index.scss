@@ -1,13 +1,37 @@
 @import 'vars';
-@import-normalize;
 
 body {
+  min-width: 320px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: $main-font;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
 }
 
+a{
+  text-decoration: none;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul, li {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.container{
+  max-width: 1140px;
+  margin: 0 auto;
+  @media (max-width: 1200px) {
+      max-width: 992px;
+  }
+  @media (max-width: 1000px) {
+      width: 100%;
+  }
+ 
+}

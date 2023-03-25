@@ -6,6 +6,7 @@ import PersonInfo from '../personInfo/PersonInfo';
 import PagesPagination from '../pagesPagination/PagesPagination';
 import styles from './Сharacters.module.scss';
 import Preloader from '../preloader/Preloader';
+import Navbar from '../navbar/Navbar.jsx';
 
 const API_URL = 'https://rickandmortyapi.com/api/character';
 const personKeys = ['name', 'origin', 'status', 'location', 'species', 'gender'];
@@ -42,10 +43,7 @@ function Сharacters() {
         })
         .then((res) => {
           if (autoPagination) {
-            setData(prev=>[
-              ...data,
-              ...res,
-            ]);
+            setData((prev) => [...data, ...res]);
             setCurrentPage(currentPage + 1);
           } else {
             setData([...res]);
@@ -67,14 +65,22 @@ function Сharacters() {
   }, [scrollHandler]);
 
   function scrollHandler(e) {
-    if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 150 && autoPagination) {
+    if (
+      e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 150 &&
+      autoPagination
+    ) {
       setIsFetching(true);
     }
   }
 
   function autoPaginationHandler() {
-      setAutoPagination((prev) => !prev);
-      changePage(currentPage+1);
+    if (autoPagination) {
+      setAutoPagination(false);
+      changePage((prev) => prev - 2);
+    } else {
+      setAutoPagination(true);
+      changePage((prev) => (prev === totalPage ? prev + 2 : prev + 1));
+    }
   }
 
   function showModalInfo(id) {
@@ -88,32 +94,28 @@ function Сharacters() {
   }
 
   return (
-    <div className={styles.container}>
-      <PagesPagination
-        currentPage={currentPage}
-        totalPage={totalPage}
-        changePage={changePage}
-        autoPagination={autoPagination}
-        autoPaginationHandler={autoPaginationHandler}
-      />
+    <div className="container">
+      <div className={styles.wrapper}>
+        <Navbar title='Pages:'>
+        <PagesPagination
+          currentPage={currentPage}
+          totalPage={totalPage}
+          changePage={changePage}
+          autoPagination={autoPagination}
+          autoPaginationHandler={autoPaginationHandler}
+        />
+      </Navbar>
+
       <div className={styles.characters}>
         {isFetching && <Preloader />}
         {data.map(({ id, image, name }) => (
-          <Card 
-            key={id} 
-            id={id} 
-            image={image} 
-            name={name} 
-            showModalInfo={showModalInfo} 
-          />
+          <Card key={id} id={id} image={image} name={name} showModalInfo={showModalInfo} />
         ))}
       </div>
-      <Modal 
-        active={modalActive} 
-        setActive={setModalActive}
-      >
+      <Modal active={modalActive} setActive={setModalActive}>
         {person ? <PersonInfo personKeys={personKeys} person={person} /> : <div className="">Information not found</div>}
       </Modal>
+      </div>
     </div>
   );
 }

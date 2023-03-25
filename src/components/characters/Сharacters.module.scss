@@ -7,11 +7,8 @@
     justify-content: space-around;
     gap: 75px 15px;
 }
-.container{
-    max-width: 1200px;
-    height: 100%;
+.wrapper{
     background-color: $bg-content;
-    margin: 0 auto;
     padding: 1px;
     box-shadow: -15px 0px 13px -7px #00000050, 15px 0px 13px -7px #00000050, 7px -6px 10px -12px rgba(0,0,0,0);
 }

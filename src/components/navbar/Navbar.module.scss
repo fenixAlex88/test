@@ -1,0 +1,67 @@
+@import "../../styles/vars";
+
+.wrapper {
+  height: 80px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  padding: 0 4rem;
+  margin: 0 1rem;
+}
+.title{
+  display: flex;
+  align-items: center;
+  font-family: $main-font;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+.menu ul{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  gap: 1.9rem;
+}
+
+.mobile_btn {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mobile_btn {
+    display: block;
+    position: absolute;
+    right: 25px;
+    top: 23px;
+    cursor: pointer;
+    z-index: 1;
+  }
+
+  .menu ul{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    left: -120vw;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #f8f8f8e8;
+    z-index: 1;
+    font-size: 3.5vh;
+    line-height: 3vh;
+    transition: left 1s;
+  }
+
+  .menu li {
+    text-align: center;
+    width: 120px;
+    border-radius: 5px;
+  }
+
+  .active ul{
+    left: 0;
+  }
+}

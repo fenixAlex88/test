@@ -1,12 +1,15 @@
 @import '../../styles/vars';
 
 .header{
-    height: 300px;
+    height: 16vw;
     background-color: $bg-header;
     display: flex;
     align-items: center;
     justify-content: center;
     &__img{
         width: 50%;
+    }
+    @media (max-width: 768px){
+        height: 120px;
     }
 }

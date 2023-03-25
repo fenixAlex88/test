@@ -17,6 +17,12 @@
     cursor: pointer;
     pointer-events: all;
     transition: all 0.4s;
+    @media (max-width:520px){
+        bottom: 15px;
+        right: 15px;
+        width: 80px;
+        height: 80px;
+    }
     &:hover {
       background-color:$bg-upbtn-hover;
       color: $color-darkGrey;

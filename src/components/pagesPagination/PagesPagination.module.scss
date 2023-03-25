@@ -1,44 +1,9 @@
-@import '../../styles/vars';
-
-.pagination {
-  display: flex;
-  &__list {
-    padding-top: 25px;
-    padding-bottom: 25px;
-    list-style: none;
-    display: flex;
-    margin: 0 auto;
-    user-select: none;
-  }
-  
-  &__item,
-  &__auto {
-    display: block;
-    cursor: pointer;
-    width: 25px;
-    text-align: center;
-    font-family: $main-font;
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 10px;
-    margin: 2px;
-    border: 1px solid;
-    border-color: $bg-pagination-selected;
-    border-radius: 5px;
-    background-color: $bg-pagination;
-    &.active {
-      background-color: $bg-pagination-selected;
-      color: $bg-pagination;
-    }
-  }
-  &__item.disabled{
-    background-color: $bg-pagination-disabled;
-    color: $color-grey;
-    pointer-events: none;
-  }
-
-  &__auto {
-    width: 50px;
-
-  }
+@import "../../styles/vars";
+.disabled{
+  color: $color-grey;
+}
+.active{
+  border-bottom: 4px solid blueviolet;
+  padding: 0 15px;
+  font-weight: 700;
 }
