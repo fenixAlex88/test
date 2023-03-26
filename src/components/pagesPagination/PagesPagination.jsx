@@ -1,24 +1,13 @@
-import { useEffect, useState } from 'react';
+import { usePaginationPages } from '../../hooks';
 import styles from './PagesPagination.module.scss';
 
-const PagesPagination = ({ currentPage, totalPage, changePage, autoPagination, autoPaginationHandler }) => {
-  const [pages, setPages] = useState([]);
+const PagesPagination = ({ currentPage, totalPage, changePage, autoPagination, autoPaginationToggle }) => {
 
-  useEffect(() => {
-    if (totalPage === 1) return;
-    let minPage = currentPage - 3 > 1 ? currentPage - 3 : 2;
-    let maxPage = minPage + 7 < totalPage ? minPage + 7 : totalPage - 1;
-    if (maxPage + 1 >= totalPage) minPage = totalPage - 8;
-    const arr = [];
-    for (let i = minPage; i <= maxPage; i++) {
-      arr.push(i);
-    }
-    setPages([1, ...arr, totalPage]);
-  }, [currentPage, totalPage]);
+  const pages = usePaginationPages(currentPage, totalPage);
 
   return (
     <ul>
-      <li className={`${autoPagination ? styles.active : ''} `} onClick={autoPaginationHandler}>
+      <li className={`${autoPagination ? styles.active : ''} `} onClick={autoPaginationToggle}>
         AUTO
       </li>
       {pages.map((count, idx) => (

@@ -46,9 +46,10 @@
 
   .menu {
     & ul {
+      padding-bottom: 20px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-end;
       position: fixed;
       left: -120vw;
       right: 0;
