@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import axios from 'axios';
 
 const personKeys = ['name', 'origin', 'status', 'location', 'species', 'gender', 'premiere'];
@@ -9,7 +9,7 @@ export const usePersonModal = (data, setError, setIsFetching) => {
     const [premiere, setPremiere] = useState();
  
     
-    useCallback(() => {
+    useEffect(() => {
         if (person.episode) {
           setIsFetching(true);
           axios
