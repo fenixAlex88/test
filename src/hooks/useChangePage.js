@@ -12,8 +12,11 @@ export const useChangePage = (setIsFetching, setError) => {
     const [currentPage, setCurrentPage] = useState(1);
     const [fetching, setFetching] = useState(true);
 
+    const clearData = () => {
+      setData([]);
+    }
 
-    const {autoPagination, autoPaginationToggle} = useAutoPaginationToggle(changePage, totalPage, setFetching);
+    const {autoPagination, autoPaginationToggle} = useAutoPaginationToggle(changePage, clearData);
 
     useEffect(() => {
         if (fetching && currentPage <= totalPage) {
@@ -40,7 +43,7 @@ export const useChangePage = (setIsFetching, setError) => {
             })
             .then((res) => {
               if (autoPagination) {
-                setData((prev) => currentPage === 1 ? res : [...data, ...res]);
+                setData((prev) => [...prev, ...res]);
                 setCurrentPage(prev=>prev + 1);
               } else {
                 setData([...res]);
